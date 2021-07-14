@@ -1,0 +1,59 @@
+{
+  "version": 2,
+  "projects": {
+    "nest-app-demo": {
+      "root": "apps/nest-app-demo",
+      "sourceRoot": "apps/nest-app-demo/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/nest-app-demo",
+            "main": "apps/nest-app-demo/src/main.ts",
+            "tsConfig": "apps/nest-app-demo/tsconfig.app.json",
+            "assets": ["apps/nest-app-demo/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/nest-app-demo/src/environments/environment.ts",
+                  "with": "apps/nest-app-demo/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "nest-app-demo:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/nest-app-demo/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/nest-app-demo"],
+          "options": {
+            "jestConfig": "apps/nest-app-demo/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/nest"
+  },
+  "defaultProject": "nest-app-demo"
+}
